@@ -13,6 +13,11 @@ export default class UpdateUserUseCase implements DefaultUpdateUserUseCase {
   private readonly repository!: IUserRepository;
 
   async execute(command: UpdateUserCommand): Promise<void> {
+    User.update({
+      email: command.getEmail(),
+      name: command.getName(),
+    });
+
     const foundUser = await this.repository.find(
       UserID.fromString(command.getId()),
     );

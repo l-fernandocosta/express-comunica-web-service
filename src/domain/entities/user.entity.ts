@@ -4,6 +4,7 @@ import Email from '../value-objects/email.vo';
 import Password from '../value-objects/password.vo';
 import UserID from '../value-objects/user-id.vo';
 import Entity from './entity';
+import { updateUserValidation } from '@/infra/validation/zod/user/update-user.validation';
 
 type UserConstructorProps = {
   id?: string;
@@ -72,6 +73,20 @@ export default class User extends Entity {
     this.email = Email.fromString(email);
   }
 
+  public static update(props: { name: string; email: string }) {
+    const parsedCommand = updateUserValidation.safeParse({
+      name: props.name,
+      email: props.email,
+    });
+
+    if (!parsedCommand.success) {
+      throw new BadRequestError({
+        context: {
+          updateUserUseCase: parsedCommand.error.errors,
+        },
+      });
+    }
+  }
   public toObject() {
     return {
       id: this.getId().getValue(),
