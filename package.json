@@ -72,5 +72,8 @@
   },
   "_moduleAliases": {
     "@": "dist/src"
+  },
+  "engines": {
+    "node": ">18.8.x"
   }
 }
