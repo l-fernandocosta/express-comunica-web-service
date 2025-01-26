@@ -1,3 +1,4 @@
+import UserNotFoundException from '@/domain/exceptions/user-not-found.exception';
 import Password from '@/domain/value-objects/password.vo';
 import { prisma } from '@/infra/persistence/prisma/prisma-client';
 import JwtService from '@/infra/security/jwt/jwt.service';
@@ -20,7 +21,7 @@ export default class AuthController extends BaseHttpController {
     });
 
     if (!user) {
-      return this.json({ error: 'USER_NOT_FOUND' }, 404);
+      throw new UserNotFoundException();
     }
 
     const isPasswordOK = Password.verify(request.body.password, user.password);

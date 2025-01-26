@@ -40,6 +40,8 @@ server.setErrorConfig((app) => {
 
 const app = server.build();
 
-app.listen(3000, () => {
-  logger.info('Listen on port 3000');
+const PORT = process.env.PORT ?? 3333;
+
+app.listen(PORT, () => {
+  logger.info(`Listen on port ${PORT} `);
 });
