@@ -109,6 +109,16 @@ Configurações Seguras: Gerenciamento de variáveis de ambiente com um arquivo 
   ```sh
   docker-compose up -d
   ```
+- Sincronize o prisma
+  ```sh
+    npx prisma db push
+  ```
+
+- Adicione dados utilizando o seed
+  ```sh
+  npm run seed
+  ```
+  
 - Inicie a aplicação
   ```sh
   npm run dev  

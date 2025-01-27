@@ -12,7 +12,13 @@ import {
   request,
 } from 'inversify-express-utils';
 import { authenticate } from '../middleware/private-route.middleware';
+import BadRequestError from '@/domain/exceptions/bad-request-exception';
 
+interface DeleteRequest extends Request {
+  user: {
+    id: string;
+  };
+}
 @controller('/users')
 export default class UserController extends BaseHttpController {
   @inject(TYPES.UserService)
@@ -47,7 +53,15 @@ export default class UserController extends BaseHttpController {
   }
 
   @httpDelete('/:id', authenticate)
-  async delete(@request() req: Request) {
+  async delete(@request() req: DeleteRequest) {
+    if (req.user.id === req.params.id) {
+      throw new BadRequestError({
+        message: 'You can not delete  yourself',
+        context: {
+          id: req.params.id,
+        },
+      });
+    }
     await this.userService.deleteUser(req.params.id);
     return this.ok();
   }
