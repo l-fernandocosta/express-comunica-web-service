@@ -32,7 +32,8 @@
     "test": "NODE_ENV=test jest --runInBand",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "fer.tsx",
